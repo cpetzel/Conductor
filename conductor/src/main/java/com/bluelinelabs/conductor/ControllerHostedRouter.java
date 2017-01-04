@@ -1,5 +1,8 @@
 package com.bluelinelabs.conductor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,9 +12,6 @@ import android.support.annotation.Nullable;
 import android.view.ViewGroup;
 
 import com.bluelinelabs.conductor.ControllerChangeHandler.ControllerChangeListener;
-
-import java.util.ArrayList;
-import java.util.List;
 
 class ControllerHostedRouter extends Router {
 
@@ -117,12 +117,12 @@ class ControllerHostedRouter extends Router {
         }
     }
 
-    @Override
+/*    @Override
     void startActivityForResult(@NonNull String instanceId, @NonNull Intent intent, int requestCode, @Nullable Bundle options) {
         if (hostController != null && hostController.getRouter() != null) {
             hostController.getRouter().startActivityForResult(instanceId, intent, requestCode, options);
         }
-    }
+    }*/
 
     @Override
     void registerForActivityResult(@NonNull String instanceId, int requestCode) {
