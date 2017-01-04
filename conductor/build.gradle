@@ -65,6 +65,38 @@ project.afterEvaluate {
     compileLintTask.dependsOn(copyLintJar)
 }
 
+//region conductor jar
+//don't remove
+//grabbed from http://stackoverflow.com/questions/16763090/how-to-export-library-to-jar-in-android-studio
+task(makeJar) << {
+    group "jar"
+    // Empty. We'll add dependencies for this task below
+}
+
+// Generate jar creation tasks for all build variants
+android.libraryVariants.all { variant ->
+    String taskName = "makeJar${variant.name.capitalize()}"
+
+    // Create a jar by extracting it from the assembled .aar
+    // This ensures that products distributed via .aar and .jar exactly the same bits
+    task(taskName, type: Copy) {
+        group "jar"
+        String archiveName = "${project.name}-${variant.name}"
+        String outputDir = "${buildDir.getPath()}/outputs"
+
+        dependsOn "assemble${variant.name.capitalize()}"
+        from(zipTree("${outputDir}/aar/${archiveName}.aar"))
+        into("${outputDir}/jar/")
+        include('classes.jar')
+        //        rename ('classes.jar', "${archiveName}-${variant.mergedFlavor.versionName}.jar")
+        rename('classes.jar', "${archiveName}.jar")
+    }
+
+    makeJar.dependsOn tasks[taskName]
+}
+
+//endregion
+
 ext.artifactId = 'conductor'
 
 apply from: rootProject.file('dependencies.gradle')
