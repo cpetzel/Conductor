@@ -1,5 +1,10 @@
 package com.bluelinelabs.conductor.internal;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Application.ActivityLifecycleCallbacks;
@@ -20,11 +25,6 @@ import android.view.ViewGroup;
 
 import com.bluelinelabs.conductor.ActivityHostedRouter;
 import com.bluelinelabs.conductor.Router;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class LifecycleHandler extends Fragment implements ActivityLifecycleCallbacks {
 
@@ -53,7 +53,7 @@ public class LifecycleHandler extends Fragment implements ActivityLifecycleCallb
 
     @Nullable
     private static LifecycleHandler findInActivity(@NonNull Activity activity) {
-        LifecycleHandler lifecycleHandler = (LifecycleHandler)activity.getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+        LifecycleHandler lifecycleHandler = (LifecycleHandler) activity.getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
         if (lifecycleHandler != null) {
             lifecycleHandler.registerActivityListener(activity);
         }
@@ -126,7 +126,8 @@ public class LifecycleHandler extends Fragment implements ActivityLifecycleCallb
             StringSparseArrayParceler activityParcel = savedInstanceState.getParcelable(KEY_ACTIVITY_REQUEST_CODES);
             activityRequestMap = activityParcel != null ? activityParcel.getStringSparseArray() : new SparseArray<String>();
 
-            ArrayList<PendingPermissionRequest> pendingRequests = savedInstanceState.getParcelableArrayList(KEY_PENDING_PERMISSION_REQUESTS);
+            ArrayList<PendingPermissionRequest> pendingRequests = savedInstanceState.getParcelableArrayList
+                (KEY_PENDING_PERMISSION_REQUESTS);
             pendingPermissionRequests = pendingRequests != null ? pendingRequests : new ArrayList<PendingPermissionRequest>();
         }
     }
@@ -278,10 +279,12 @@ public class LifecycleHandler extends Fragment implements ActivityLifecycleCallb
         startActivityForResult(intent, requestCode);
     }
 
-    public void startActivityForResult(@NonNull String instanceId, @NonNull Intent intent, int requestCode, @Nullable Bundle options) {
-        registerForActivityResult(instanceId, requestCode);
-        startActivityForResult(intent, requestCode, options);
-    }
+    //this was added in api 16. going to just remove this method
+    //    public void startActivityForResult(@NonNull String instanceId, @NonNull Intent intent, int requestCode, @Nullable Bundle
+    //        options) {
+    //        registerForActivityResult(instanceId, requestCode);
+    //        startActivityForResult(intent, requestCode, options);
+    //    }
 
     @TargetApi(Build.VERSION_CODES.M)
     public void requestPermissions(@NonNull String instanceId, @NonNull String[] permissions, int requestCode) {
@@ -348,7 +351,8 @@ public class LifecycleHandler extends Fragment implements ActivityLifecycleCallb
     }
 
     @Override
-    public void onActivityDestroyed(Activity activity) { }
+    public void onActivityDestroyed(Activity activity) {
+    }
 
     private static class PendingPermissionRequest implements Parcelable {
         final String instanceId;
@@ -379,7 +383,8 @@ public class LifecycleHandler extends Fragment implements ActivityLifecycleCallb
             out.writeInt(requestCode);
         }
 
-        public static final Parcelable.Creator<PendingPermissionRequest> CREATOR = new Parcelable.Creator<PendingPermissionRequest>() {
+        public static final Parcelable.Creator<PendingPermissionRequest> CREATOR = new Parcelable
+            .Creator<PendingPermissionRequest>() {
             @Override
             public PendingPermissionRequest createFromParcel(Parcel in) {
                 return new PendingPermissionRequest(in);
