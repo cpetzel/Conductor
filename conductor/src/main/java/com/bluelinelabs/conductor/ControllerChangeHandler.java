@@ -1,5 +1,10 @@
 package com.bluelinelabs.conductor;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,11 +14,6 @@ import android.view.ViewParent;
 
 import com.bluelinelabs.conductor.changehandler.SimpleSwapChangeHandler;
 import com.bluelinelabs.conductor.internal.ClassUtils;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * ControllerChangeHandlers are responsible for swapping the View for one Controller to the View
@@ -147,9 +147,8 @@ public abstract class ControllerChangeHandler {
                 abortPush(from, to, handler);
             }
 
-            for (ControllerChangeListener listener : listeners) {
-                listener.onChangeStarted(to, from, isPush, container, handler);
-            }
+            //PRIMER. this is where the change handlers were notified of the change starting
+
 
             final ControllerChangeType toChangeType = isPush ? ControllerChangeType.PUSH_ENTER : ControllerChangeType.POP_ENTER;
             final ControllerChangeType fromChangeType = isPush ? ControllerChangeType.PUSH_EXIT : ControllerChangeType.POP_EXIT;
@@ -168,6 +167,11 @@ public abstract class ControllerChangeHandler {
                 from.changeStarted(handler, fromChangeType);
             } else {
                 fromView = null;
+            }
+
+            //PRIMER this is where I moved it to
+            for (ControllerChangeListener listener : listeners) {
+                listener.onChangeStarted(to, from, isPush, container, handler);
             }
 
             handler.performChange(container, fromView, toView, isPush, new ControllerChangeCompletedListener() {
