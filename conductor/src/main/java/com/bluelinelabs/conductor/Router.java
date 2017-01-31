@@ -344,13 +344,19 @@ public abstract class Router {
     public void setBackstack(@NonNull List<RouterTransaction> newBackstack, @Nullable ControllerChangeHandler changeHandler) {
         List<RouterTransaction> oldVisibleTransactions = getVisibleTransactions(backstack.iterator());
 
+        //PRIMER moved this method up from below. It was removing the old controller view from the container, because the
+        // backstack had been reset. If i call this here, then the existing logic for keeping this view around will apply
+        // (because the controller and its view are still attached and active). As soon as we would reset the backstack, that
+        // same logic would detach the controller, so its view would be removed.
+        removeAllExceptVisibleAndUnowned();
+
         backstack.setBackstack(newBackstack);
 
         for (RouterTransaction transaction : backstack) {
             transaction.onAttachedToRouter();
         }
 
-        removeAllExceptVisibleAndUnowned();
+        //PRIMER. removeAllExceptVisibleAndUnowned used to be here
 
         if (newBackstack.size() > 0) {
             List<RouterTransaction> reverseNewBackstack = new ArrayList<>(newBackstack);
