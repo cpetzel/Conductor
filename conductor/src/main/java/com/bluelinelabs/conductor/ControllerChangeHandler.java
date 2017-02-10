@@ -8,6 +8,7 @@ import java.util.Map;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -25,7 +26,9 @@ public abstract class ControllerChangeHandler {
     private static final String KEY_CLASS_NAME = "ControllerChangeHandler.className";
     private static final String KEY_SAVED_STATE = "ControllerChangeHandler.savedState";
 
-    private static final Map<String, ControllerChangeHandler> inProgressPushHandlers = new HashMap<>();
+    //PRIMER making this package private for testing
+    @VisibleForTesting
+    static final Map<String, ControllerChangeHandler> inProgressPushHandlers = new HashMap<>();
 
     private boolean forceRemoveViewOnPush;
 
@@ -182,8 +185,10 @@ public abstract class ControllerChangeHandler {
                     }
 
                     if (to != null) {
-                        inProgressPushHandlers.remove(to.getInstanceId());
+                        //PRIMER swapped the order of these two... because to is not actually finished... so lets not remove it
+                        // until we notify that controller that we are finished (used for a custom IdlingResource in test code)
                         to.changeEnded(handler, toChangeType);
+                        inProgressPushHandlers.remove(to.getInstanceId());
                     }
 
                     for (ControllerChangeListener listener : listeners) {
