@@ -1,8 +1,12 @@
 package com.bluelinelabs.conductor;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,11 +23,6 @@ import com.bluelinelabs.conductor.changehandler.SimpleSwapChangeHandler;
 import com.bluelinelabs.conductor.internal.NoOpControllerChangeHandler;
 import com.bluelinelabs.conductor.internal.ThreadUtils;
 import com.bluelinelabs.conductor.internal.TransactionIndexer;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * A Router implements navigation and backstack handling for {@link Controller}s. Router objects are attached
@@ -827,9 +826,8 @@ public abstract class Router {
     abstract void invalidateOptionsMenu();
     abstract void startActivity(@NonNull Intent intent);
     abstract void startActivityForResult(@NonNull String instanceId, @NonNull Intent intent, int requestCode);
-    abstract void startActivityForResult(@NonNull String instanceId, @NonNull Intent intent, int requestCode, @Nullable Bundle options);
-    abstract void startIntentSenderForResult(@NonNull String instanceId, @NonNull IntentSender intent, int requestCode, @Nullable Intent fillInIntent, int flagsMask,
-                                             int flagsValues, int extraFlags, @Nullable Bundle options) throws IntentSender.SendIntentException;
+//    abstract void startIntentSenderForResult(@NonNull String instanceId, @NonNull IntentSender intent, int requestCode, @Nullable Intent fillInIntent, int flagsMask,
+//                                             int flagsValues, int extraFlags, @Nullable Bundle options) throws IntentSender.SendIntentException;
     abstract void registerForActivityResult(@NonNull String instanceId, int requestCode);
     abstract void unregisterForActivityResults(@NonNull String instanceId);
     abstract void requestPermissions(@NonNull String instanceId, @NonNull String[] permissions, int requestCode);

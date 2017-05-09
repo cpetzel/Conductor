@@ -1,10 +1,18 @@
 package com.bluelinelabs.conductor;
 
+import java.lang.ref.WeakReference;
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.UUID;
+
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,15 +34,6 @@ import com.bluelinelabs.conductor.internal.ClassUtils;
 import com.bluelinelabs.conductor.internal.RouterRequiringFunc;
 import com.bluelinelabs.conductor.internal.ViewAttachHandler;
 import com.bluelinelabs.conductor.internal.ViewAttachHandler.ViewAttachListener;
-
-import java.lang.ref.WeakReference;
-import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * A Controller manages portions of the UI. It is similar to an Activity or Fragment in that it manages its
@@ -500,20 +499,22 @@ public abstract class Controller {
 
     /**
      * Calls startActivityForResult(Intent, int, Bundle) from this Controller's host Activity.
-     */
+
     public final void startActivityForResult(@NonNull final Intent intent, final int requestCode, @Nullable final Bundle options) {
         executeWithRouter(new RouterRequiringFunc() {
             @Override public void execute() { router.startActivityForResult(instanceId, intent, requestCode, options); }
         });
     }
+     */
 
     /**
      * Calls startIntentSenderForResult(IntentSender, int, Intent, int, int, int, Bundle) from this Controller's host Activity.
      */
-    public final void startIntentSenderForResult(@NonNull final IntentSender intent, final int requestCode, @Nullable final Intent fillInIntent, final int flagsMask,
+    //PRIMER REMOVED
+/*    public final void startIntentSenderForResult(@NonNull final IntentSender intent, final int requestCode, @Nullable final Intent fillInIntent, final int flagsMask,
                                                  final int flagsValues, final int extraFlags, @Nullable final Bundle options) throws IntentSender.SendIntentException {
         router.startIntentSenderForResult(instanceId, intent, requestCode, fillInIntent, flagsMask, flagsValues, extraFlags, options);
-    }
+    }*/
 
     /**
      * Registers this Controller to handle onActivityResult responses. Calling this method is NOT

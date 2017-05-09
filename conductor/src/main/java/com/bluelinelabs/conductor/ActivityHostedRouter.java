@@ -1,9 +1,9 @@
 package com.bluelinelabs.conductor;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
-import android.content.IntentSender;
-import android.content.IntentSender.SendIntentException;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,8 +12,6 @@ import android.view.ViewGroup;
 import com.bluelinelabs.conductor.ControllerChangeHandler.ControllerChangeListener;
 import com.bluelinelabs.conductor.internal.LifecycleHandler;
 import com.bluelinelabs.conductor.internal.TransactionIndexer;
-
-import java.util.List;
 
 public class ActivityHostedRouter extends Router {
 
@@ -82,16 +80,17 @@ public class ActivityHostedRouter extends Router {
         lifecycleHandler.startActivityForResult(instanceId, intent, requestCode);
     }
 
-    @Override
+    //PRIMER REMOVED
+    /*@Override
     void startActivityForResult(@NonNull String instanceId, @NonNull Intent intent, int requestCode, @Nullable Bundle options) {
         lifecycleHandler.startActivityForResult(instanceId, intent, requestCode, options);
-    }
+    }*/
 
-    @Override
+    /*@Override
     void startIntentSenderForResult(@NonNull String instanceId, @NonNull IntentSender intent, int requestCode, @Nullable Intent fillInIntent,
                                     int flagsMask, int flagsValues, int extraFlags, @Nullable Bundle options) throws SendIntentException {
         lifecycleHandler.startIntentSenderForResult(instanceId, intent, requestCode, fillInIntent, flagsMask, flagsValues, extraFlags, options);
-    }
+    }*/
 
     @Override
     void registerForActivityResult(@NonNull String instanceId, int requestCode) {

@@ -1,5 +1,8 @@
 package com.bluelinelabs.conductor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -12,9 +15,6 @@ import android.view.ViewGroup;
 
 import com.bluelinelabs.conductor.ControllerChangeHandler.ControllerChangeListener;
 import com.bluelinelabs.conductor.internal.TransactionIndexer;
-
-import java.util.ArrayList;
-import java.util.List;
 
 class ControllerHostedRouter extends Router {
 
@@ -140,19 +140,19 @@ class ControllerHostedRouter extends Router {
         }
     }
 
-    @Override
+/*    @Override
     void startActivityForResult(@NonNull String instanceId, @NonNull Intent intent, int requestCode, @Nullable Bundle options) {
         if (hostController != null && hostController.getRouter() != null) {
             hostController.getRouter().startActivityForResult(instanceId, intent, requestCode, options);
         }
-    }
+    }*/
 
-    @Override
+   /* @Override
     void startIntentSenderForResult(@NonNull String instanceId, @NonNull IntentSender intent, int requestCode, @Nullable Intent fillInIntent, int flagsMask, int flagsValues, int extraFlags, @Nullable Bundle options) throws SendIntentException {
         if (hostController != null && hostController.getRouter() != null) {
             hostController.getRouter().startIntentSenderForResult(instanceId, intent, requestCode, fillInIntent, flagsMask, flagsValues, extraFlags, options);
         }
-    }
+    }*/
 
     @Override
     void registerForActivityResult(@NonNull String instanceId, int requestCode) {
